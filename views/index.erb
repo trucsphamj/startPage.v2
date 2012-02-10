@@ -17,7 +17,7 @@
     <div id="container">
 	<ul class="horizontal_list">
 		<% #if no custom sites have been set, display the default sites..
-		if $sitesHash.empty? %>
+		if @sitesHash.empty? %>
 			<li><a href="http://www.facebook.com"><img src="images/icon-facebook.png" /></a>
 			</li>
 			<li><a href="http://www.gmail.com"><img src="images/icon-gmail.png" /></a>
@@ -30,8 +30,8 @@
 			</li>
 		<% #if there are custom sites to display, display them:
 		else %>
-			<%$sitesHash.each do |k, v|%>
-      		  	   <li><a href="<%=$sitesHash.index(v)%>" id="link"><strong><%=$sitesHash[k]%></strong></a></li>
+			<%@sitesHash.each do |k, v|%>
+      		  	   <li><a href="<%=@sitesHash.index(v)%>" id="link"><strong><%=@sitesHash[k]%></strong></a></li>
 			<%end%>
 		<%end%>
 	</ul>

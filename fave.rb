@@ -4,15 +4,17 @@ require 'redis'
 r = Redis.new
 
 before do
-   $suggestedLinks = {"http://www.bankofamerica.com" => "Bank Of America", "http://www.fullerton.edu" => "Cal State Fulllerton", 
+   @suggestedLinks = {"http://www.bankofamerica.com" => "Bank Of America", "http://www.fullerton.edu" => "Cal State Fulllerton", 
    "http://www.youtube.com" => "YouTube", "http://www.facebook.com" => "Facebook", "http://csuf.kenytt.net" => "Web Programming CPSC 473, CSU Fullerton",
    "http://www.frys.com" => "Frys Electronic", "http://www.nasa.com" => "NASA", "http://www.ruby-doc.org/core-1.9.3/" => "Ruby API",
    "http://redis.io/commands" => "Redis API"}
-   $toBeDeletedLinksHash = {}
+   @toBeDeletedLinksHash = {}
+   @favoriteURLs0 = session[:email]
 end
 
-$sitesHash = {}
-$toBeDeletedLinksHash = {}
+@sitesHash = {}
+@toBeDeletedLinksHash = {}
+@favoriteURLs0
 
 configure do
    enable :sessions
@@ -34,12 +36,12 @@ end
 
 #The homepage displays all the favorite URLs
 get '/' do  
-   if(session[:email] == nil)
+      if(session[:email] == nil)
       r.select 1
-      $sitesHash = r.hgetall 'favoriteURLs1'
+      @sitesHash = r.hgetall 'favoriteURLs1'
    else 
       r.select 0
-      $sitesHash = r.hgetall 'favoriteURLs0'
+      @sitesHash = r.hgetall @favoriteURLs0
    end
    erb :index
 end
@@ -49,15 +51,15 @@ get '/edit' do
      erb :customize
 end
 
-get '/customize' do
+get '/customize' do  
    if(session[:email] == nil)
       r.select 1
-      $sitesHash = r.hgetall 'favoriteURLs1'
-      $toBeDeletedLinksHash = r.hgetall 'favoriteURLs1'
+      @sitesHash = r.hgetall 'favoriteURLs1'
+      @toBeDeletedLinksHash = r.hgetall 'favoriteURLs1'
    else 
       r.select 0
-      $sitesHash = r.hgetall 'favoriteURLs0'
-      $toBeDeletedLinksHash = r.hgetall 'favoriteURLs0'
+      @sitesHash = r.hgetall @favoriteURLs0
+      @toBeDeletedLinksHash = r.hgetall @favoriteURLs0
    end
    erb :customize
 end
@@ -79,7 +81,6 @@ post '/login' do
   if ((r.hexists 'userInfo', params[:email]) && !((r.hget 'userInfo', params[:email]).eql? params[:password]) )
      @invalidInfo = true
   else
-     $toBeDeletedLinksHash = r.hgetall 'toBeDeletedLinks0'
      session[:email] = params[:email]
   end
   erb :login
@@ -90,7 +91,7 @@ post '/addURL' do
    @hiddenURL = params[:hiddenURL]
    @url = params[:myURL]
    @siteName = params[:siteName]
-   
+         
    if(session[:email] == nil)
       r.select 1
       if((@hiddenURL != nil) && (@url == nil))
@@ -101,28 +102,28 @@ post '/addURL' do
    else
       r.select 0
       if((@hiddenURL != nil) && (@url == nil))
-   	 r.hsetnx 'favoriteURLs0',@hiddenURL, @siteName 
+   	 r.hsetnx @favoriteURLs0,@hiddenURL, @siteName 
       else
-        r.hsetnx 'favoriteURLs0', @url, @siteName
+        r.hsetnx @favoriteURLs0, @url, @siteName
       end
    end
    redirect '/'
 end
 
 post '/removeURL' do
-   if(session[:email] == nil)
+     if(session[:email] == nil)
       r.select 1
       @hiddenURL = params[:hiddenURL]
       @siteName = params[:siteName]
-      $suggestedLinks[@hiddenURL] = @siteName
+      @suggestedLinks[@hiddenURL] = @siteName
       r.hdel 'favoriteURLs1', @hiddenURL
       redirect '/'
    else
       r.select 0
       @hiddenURL = params[:hiddenURL]
       @siteName = params[:siteName]
-      $suggestedLinks[@hiddenURL] = @siteName
-      r.hdel 'favoriteURLs0', @hiddenURL
+      @suggestedLinks[@hiddenURL] = @siteName
+      r.hdel @favoriteURLs0, @hiddenURL
       redirect '/'
    end  
 end
@@ -137,6 +138,6 @@ end
 
 #this section is no longer needed since the favorite URLs will be displayed on the front page.
 get '/mySites' do
-   $sitesHash = r.hgetall 'favoriteURLs'
+   @sitesHash = r.hgetall 'favoriteURLs'
    erb :index
 end

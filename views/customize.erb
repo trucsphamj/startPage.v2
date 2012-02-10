@@ -10,28 +10,28 @@
     </div>   
     <div id="login">
     	<h1>Choose your start pages:</h1>
-			<%$toBeDeletedLinksHash.each do |k, v|
-  			   if($suggestedLinks.has_key?(k))
-				$suggestedLinks.delete(k)
+			<%@toBeDeletedLinksHash.each do |k, v|
+  			   if(@suggestedLinks.has_key?(k))
+				@suggestedLinks.delete(k)
 			   end
 			end
-			$suggestedLinks.each do |k, v|%>	   		 
+			@suggestedLinks.each do |k, v|%>	   		 
 		   	<form action="addURL" method="POST">
 			   <fieldset>
-			   <label><%=$suggestedLinks[k]%></label>
-			   <input type="hidden" name="hiddenURL" id="hiddenURL" value="<%=$suggestedLinks.index(v)%>"/>
-			   <input type="hidden" name="siteName" value="<%=$suggestedLinks[k]%>"/>
+			   <label><%=@suggestedLinks[k]%></label>
+			   <input type="hidden" name="hiddenURL" id="hiddenURL" value="<%=k%>"/>
+			   <input type="hidden" name="siteName" value="<%=@suggestedLinks[k]%>"/>
 			   <input type="submit" name="addSuggestedURL" value="Add" id="addSuggestedURL"/>
 			   </fieldset>			
 		      </form>
 			
 		   <%end%>
-		   <%$toBeDeletedLinksHash.each do |k, v|%>	   		 
+		   <%@toBeDeletedLinksHash.each do |k, v|%>	   		 
 		   	<form action="removeURL" method="POST">
 			   <fieldset>
-			   <label><%=$toBeDeletedLinksHash[k]%></label>
-			   <input type="hidden" name="hiddenURL" id="hiddenURL" value="<%=$toBeDeletedLinksHash.index(v)%>"/>
-			   <input type="hidden" name="siteName" value="<%=$toBeDeletedLinksHash[k]%>"/>
+			   <label><%=@toBeDeletedLinksHash[k]%></label>
+			   <input type="hidden" name="hiddenURL" id="hiddenURL" value="<%=k%>"/>
+			   <input type="hidden" name="siteName" value="<%=@toBeDeletedLinksHash[k]%>"/>
 			   <input type="submit" name="removeURL" value="Remove" id="removeURL"/>
 			   </fieldset>			
 		      </form>
