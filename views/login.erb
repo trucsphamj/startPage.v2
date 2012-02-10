@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Log in!</title>
+    <link rel="stylesheet" href="css/login_register.css" type="text/css" />
+</head>
+<body>
+<form id="login" method="post" action=""> 
+
+    <h1>Log in!</h1>
+    <p class="register">Not a member? <a href="/register">Register here!</a></p>
+    
+    <div>
+    	<label for="email">Email</label> 
+    	<input type="text" name="email" id="email" class="field required" title="Please provide your email" />
+    </div>			
+
+    <div>
+    	<label for="password">Password</label>
+    	<input type="password" name="password" id="password" class="field required" title="Password is required" />
+    </div>			
+    
+    			
+    <div class="submit">
+        <button type="submit">Log in</button>    
+    </div>
+    
+    <p class="back"><a href="/customize">Go back to customizing your start page</a></p>
+  
+</form>	
+
+<%if(@invalidInfo)%>
+   <div>
+      <label>Invalid log in information. Try again!</label>
+   </div>
+<%end%>
+
+
+</body>
+</html>
+

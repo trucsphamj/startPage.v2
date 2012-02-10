@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Customize your start page</title>
+    <link rel="stylesheet" href="css/customize.css" type="text/css" />
+</head>
+<body>
+    <div class="top_right_text">
+          <a href="/login">Login</a> | <a href="/register">Register</a>
+    </div>   
+    <div id="login">
+    	<h1>Choose your start pages:</h1>
+			<%$toBeDeletedLinksHash.each do |k, v|
+  			   if($suggestedLinks.has_key?(k))
+				$suggestedLinks.delete(k)
+			   end
+			end
+			$suggestedLinks.each do |k, v|%>	   		 
+		   	<form action="addURL" method="POST">
+			   <fieldset>
+			   <label><%=$suggestedLinks[k]%></label>
+			   <input type="hidden" name="hiddenURL" id="hiddenURL" value="<%=$suggestedLinks.index(v)%>"/>
+			   <input type="hidden" name="siteName" value="<%=$suggestedLinks[k]%>"/>
+			   <input type="submit" name="addSuggestedURL" value="Add" id="addSuggestedURL"/>
+			   </fieldset>			
+		      </form>
+			
+		   <%end%>
+		   <%$toBeDeletedLinksHash.each do |k, v|%>	   		 
+		   	<form action="removeURL" method="POST">
+			   <fieldset>
+			   <label><%=$toBeDeletedLinksHash[k]%></label>
+			   <input type="hidden" name="hiddenURL" id="hiddenURL" value="<%=$toBeDeletedLinksHash.index(v)%>"/>
+			   <input type="hidden" name="siteName" value="<%=$toBeDeletedLinksHash[k]%>"/>
+			   <input type="submit" name="removeURL" value="Remove" id="removeURL"/>
+			   </fieldset>			
+		      </form>
+		   <%end%>
+
+	<h1>Don't see anything you like?</h1>
+		<p>Enter your site name and URL</p>
+			<form action="addURL" method="POST" />
+			<label>Site Name</label>
+			<input type="text" name="siteName" value=""/>
+			<p>
+    			<label>URL</lable>
+			<input type="text" size="25" name="myURL" id="myURL" value="http://"/>
+			<div class="submit">
+			<input type="submit" name="add" value="Add" id="addURL"/>
+			</div>
+			</p><br />
+<p class="back"><a href="/">Go back to your start page</a></p>
+		   </form>
+	</div>
+    <div>
+<form id="login" method="post" action=""> 
+<h1>Want to change the background?</h1>
+    	<label for="background">Background color: (Ex: #FFFFFF)</label>
+    		<input type="text" name="background" id="background" title="Enter the background color" />
+       	<div class="submit">
+		<button type="submit">Submit</button>
+		</div>
+	<p class="back"><a href="/">Go back to your start page</a></p>
+	</div>			
+    
+    
+  
+</form>	
+
+</body>
+</html>
+

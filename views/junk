@@ -1,0 +1,5 @@
+if(r.hlen 'suggestedURLs1' != 0)
+         $suggestedLinks = r.hgetall 'suggestedURLs1'
+          puts(r.hlen 'suggestedURLs1')
+         puts("size = #{$suggestedLinks}" )
+      end

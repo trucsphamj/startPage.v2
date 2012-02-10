@@ -1,0 +1,74 @@
+/*
+This stylesheet will show unordered lists horizontally, and will wrap around:
+Meaning if you have 5 items, it will show in one row,
+if you have 10 items, it will show in two rows,
+if you have 15 items, it will show in three rows, etc.
+-Note that the number of items shown in one row changes with width of browser!
+*/
+
+body {
+	line-height: 1;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	background: no-repeat center center fixed;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	background-image: linear-gradient(bottom, rgb(149,162,166) 19%, rgb(215,213,245) 60%);
+	background-image: -o-linear-gradient(bottom, rgb(149,162,166) 19%, rgb(215,213,245) 60%);
+	background-image: -moz-linear-gradient(bottom, rgb(149,162,166) 19%, rgb(215,213,245) 60%);
+	background-image: -webkit-linear-gradient(bottom, rgb(149,162,166) 19%, rgb(215,213,245) 60%);
+	background-image: -ms-linear-gradient(bottom, rgb(149,162,166) 19%, rgb(215,213,245) 60%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.19, rgb(149,162,166)),
+		color-stop(0.6, rgb(215,213,245))
+		);
+}
+
+ul{
+    margin: 0 auto;
+    padding: 0;
+}
+ul.horizontal_list li{
+    text-align: left;
+    float: left;
+    list-style: none;
+    padding: 3px 10px 3px 10px;
+    margin: 5px;
+    border: 0px;
+}
+
+#container
+{
+	margin-left: 10%;
+	margin-right: 10%;
+	vertical-align: middle;
+	margin-top: 15%;
+	
+}
+
+
+
+/* Links at the top right of the page */
+.top_right_text {
+    position: absolute;
+    top: 15px;
+    right: 40px;
+    text-align: right;
+    font-size: 11px;
+    font-weight: bold;
+    color: #3A3A3A; 
+      }
+.top_right_text a {
+    color: #00A8FF; 
+    text-decoration: none;
+      }
+.top_right_text a:hover,
+      {
+    color: #46C0FF;
+    text-decoration: none;
+      }
+
